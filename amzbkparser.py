@@ -5,7 +5,29 @@ __version__ = '0.1'
 import requests
 from bs4 import BeautifulSoup as BS
 
+class AmzBook(object):
+
+    def __init__(
+        self,
+        title='',
+        authors=[],
+        publisher='',
+        img_url='',
+        category='',
+        progress=0
+    ):
+        self.title = title
+        self.authors = authors
+        self.publisher = publisher
+        self.img_url = img_url
+        self.category = category
+        self.progress = progress
+
+    def __str__(self):
+        return str(self.authors) + '_' + str(self.title) + '_' + str(self.publisher)
+
 def parse(url, debug=False):
+
     headers = {'user-agent': 'Chrome/41.0.2228.0'}
 
     response = requests.get(url, headers=headers)
@@ -40,14 +62,28 @@ def parse(url, debug=False):
                 print(item.text)
             publisher = item.text
 
+    # create book
+    book = AmzBook()
+    book.title = title
+    book.authors = author_names
+    book.publisher = publisher
+
+    return book
+
+
 def test():
     urls = []
     urls.append('https://www.amazon.com/Ordinary-Differential-Equations-Dover-Mathematics/dp/0486649407/ref=sr_1_1?ie=UTF8&qid=1474146791&sr=8-1&keywords=ordinary+equation')
     urls.append('https://www.amazon.com/Schaums-Outline-Mathematica-2ed-Outlines/dp/0071608281')
 
+    books = []
+
     for url in urls:
-        parse(url, debug=True)
+        books.append(parse(url, debug=True))
         print('...........................')
+
+    for book in books:
+        print(book)
 
 if __name__ == '__main__':
     test()
