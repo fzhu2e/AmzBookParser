@@ -3,7 +3,7 @@ import amzbkparser
 
 setup(
     name = 'amzbkparser',
-    version=pyesg.__version__,
+    version=amzbkparser.__version__,
     description = 'Amazon Book Parser',
     long_description=open('README.md').read(),
     author='Feng Zhu',

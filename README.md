@@ -5,8 +5,9 @@
 This is a Python 3 library that parses the book information given an Amazon URL.
 
 Some critical libraries used:
-    * requests
-    * bs4
+
+    + requests
+    + bs4
 
 ## About
 
