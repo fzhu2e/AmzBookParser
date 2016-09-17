@@ -2,10 +2,11 @@
 
 ## Introduction
 
-This is a Python program that parses the book information given an amazon URL.
+This is a Python 3 library that parses the book information given an Amazon URL.
 
-Some third-party modules are required:
-* click
+Some critical libraries used:
+    * requests
+    * bs4
 
 ## About
 
