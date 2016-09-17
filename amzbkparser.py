@@ -30,7 +30,7 @@ def parse(url):
     img_url = soup.find_all(id='imgBlkFront')[0].get('src')
     print(img_url)
 
-    details = soup.find_all('div', {'class':'content'})[0].ul.find_all('li')
+    details = soup.find_all(id='detail-bullets')[0].ul.find_all('li')
     for item in details:
             if 'Publisher:' in item.text:
                         print(item.text)
@@ -40,8 +40,13 @@ def parse(url):
 
 
 def test():
-    url = 'https://www.amazon.com/Ordinary-Differential-Equations-Dover-Mathematics/dp/0486649407/ref=sr_1_1?ie=UTF8&qid=1474146791&sr=8-1&keywords=ordinary+equation'
-    parse(url)
+    urls = []
+    urls.append('https://www.amazon.com/Ordinary-Differential-Equations-Dover-Mathematics/dp/0486649407/ref=sr_1_1?ie=UTF8&qid=1474146791&sr=8-1&keywords=ordinary+equation')
+    urls.append('https://www.amazon.com/Schaums-Outline-Mathematica-2ed-Outlines/dp/0071608281')
+
+    for url in urls:
+        parse(url)
+        print('...........................')
 
 if __name__ == '__main__':
     test()
