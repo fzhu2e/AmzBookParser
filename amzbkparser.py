@@ -5,7 +5,7 @@ __version__ = '0.1'
 import requests
 from bs4 import BeautifulSoup as BS
 
-def parse(url):
+def parse(url, debug=False):
     headers = {'user-agent': 'Chrome/41.0.2228.0'}
 
     response = requests.get(url, headers=headers)
@@ -15,7 +15,8 @@ def parse(url):
     soup = BS(response.content, 'html.parser')
 
     title = soup.find_all(id="productTitle")[0].string
-    print(title)
+    if debug:
+    	print(title)
 
     authors = soup.find_all('span', {'class':"author notFaded"})
     author_names = []
@@ -25,19 +26,19 @@ def parse(url):
         if name != []:
             author_names.append(name[0].string)
 
-    print(author_names)
+    if debug:
+    	print(author_names)
 
     img_url = soup.find_all(id='imgBlkFront')[0].get('src')
-    print(img_url)
+    if debug:
+        print(img_url)
 
     details = soup.find_all(id='detail-bullets')[0].ul.find_all('li')
     for item in details:
-            if 'Publisher:' in item.text:
-                        print(item.text)
-                        publisher = item.text
-
-
-
+        if 'Publisher:' in item.text:
+            if debug:
+                print(item.text)
+            publisher = item.text
 
 def test():
     urls = []
@@ -45,7 +46,7 @@ def test():
     urls.append('https://www.amazon.com/Schaums-Outline-Mathematica-2ed-Outlines/dp/0071608281')
 
     for url in urls:
-        parse(url)
+        parse(url, debug=True)
         print('...........................')
 
 if __name__ == '__main__':
