@@ -24,49 +24,55 @@ class AmzBook(object):
         self.progress = progress
 
     def __str__(self):
-        return str(self.authors) + '_' + str(self.title) + '_' + str(self.publisher)
+        return str(self.authors) + '\n' + str(self.title) + '\n' + str(self.publisher) + '\n' + '\n' + str(self.img_url)
 
 def parse(url, debug=False):
 
     headers = {'user-agent': 'Chrome/41.0.2228.0'}
 
     response = requests.get(url, headers=headers)
+
     if response.status_code != 200:
         raise ValueError('ERROR')
 
     soup = BS(response.content, 'html.parser')
 
-    title = soup.find_all(id="productTitle")[0].string
-    if debug:
-    	print(title)
+    if soup.find_all(id='productTitle') == []:
+        title = soup.find_all(id='ebooksProductTitle')[0].string
+    else:
+        title = soup.find_all(id="productTitle")[0].string
+
+    if debug: print(title)
 
     authors = soup.find_all('span', {'class':"author notFaded"})
     author_names = []
 
     for author in authors:
         name = author.find_all('a', {'class':'a-link-normal contributorNameID'})
+        if name == []:
+            name = author.find_all('a', {'class':'a-link-normal'})
         if name != []:
             author_names.append(name[0].string)
 
-    if debug:
-    	print(author_names)
+    if debug: print(author_names)
 
     img_url = soup.find_all(id='imgBlkFront')[0].get('src')
-    if debug:
-        print(img_url)
+    if debug: print(img_url)
 
     details = soup.find_all(id='detail-bullets')[0].ul.find_all('li')
     for item in details:
         if 'Publisher:' in item.text:
-            if debug:
-                print(item.text)
-            publisher = item.text
+
+            publisher = item.text.replace('Publisher:',"").lstrip()
+            if debug: print(publisher)
+
 
     # create book
     book = AmzBook()
     book.title = title
     book.authors = author_names
     book.publisher = publisher
+    book.img_url = img_url
 
     return book
 
