@@ -13,6 +13,7 @@ class AmzBook(object):
         authors=[],
         publisher='',
         img_url='',
+        link_url='',
         category='',
         progress=0
     ):
@@ -20,6 +21,7 @@ class AmzBook(object):
         self.authors = authors
         self.publisher = publisher
         self.img_url = img_url
+        self.link_url = link_url
         self.category = category
         self.progress = progress
 
@@ -73,6 +75,7 @@ def parse(url, debug=False):
     book.authors = author_names
     book.publisher = publisher
     book.img_url = img_url
+    book.link_url = url
 
     return book
 
