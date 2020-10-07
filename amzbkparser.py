@@ -30,7 +30,7 @@ class AmzBook(object):
 
 def parse(url, debug=False):
 
-    headers = {'user-agent': 'Chrome/41.0.2228.0'}
+    headers = {'User-Agent': 'Defined'}
 
     response = requests.get(url, headers=headers)
 
